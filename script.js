@@ -46,13 +46,18 @@ function createGrid(gridSideSize) {
         cell.addEventListener("mousedown", (event) => {
             event.preventDefault();
 
+            const colorPicker = document.getElementById("grid-color")
+            const color = colorPicker.value;
+
             switch (event.button) {
 
                 // Left click to add background color
                 case 0: 
+                    event.target.style.backgroundColor = color;
                     event.target.classList.add("changeColor");
 
                     const onMouseOverAdd = (overEvent) => {
+                        overEvent.target.style.backgroundColor = color;
                         overEvent.target.classList.add("changeColor");
                     };
 
@@ -66,9 +71,11 @@ function createGrid(gridSideSize) {
 
                 // Right click to remove background color
                 case 2: 
+                    event.target.style.backgroundColor = "";
                     event.target.classList.remove("changeColor");
 
                     const onMouseOverRemove = (overEvent) => {
+                        overEvent.target.style.backgroundColor = "";
                         overEvent.target.classList.remove("changeColor");
                     };
 
