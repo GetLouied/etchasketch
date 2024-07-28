@@ -1,30 +1,35 @@
 /* 
 
-TO DO: 
-    BOTTOM CONTROLS (under slider):
-        - Color Picker
-        - Random Color Generator
-        - Something Special
-            - automatically creates pixeled picture for fun
-        - Remove Grid
-        - Clear Button
+TO DO LIST:
+    Special Button:
+        - Set everything to a black picture of the troll face
+        - certain cells will be set to black, 42 by 42 pixels
+        - Add laughing sound upon being clicked
 
-    LEFT SIDE BAR: 
-        USAGE KEY: 
-            - Left Click Paints Selected Color
-            - Right Click Clears Square
-            - Shift Click Darkens Square (add functionality)
+    Bottom Controls Design:
+        - Clipart above each button
 
-    OTHER: 
-        - Add hover tooltips for each button
-*/      
+    Add Footer
 
+    Tooltips upon hover of each control button
+        - Make sure there is a time delay before the tooltip shows
+    
+    Key Template
+        - Description
+        - Available Keys
+            - Left Click Hold - Applies Color
+            - Left Click + Shift Hold - Applies Shading
+            - Right Click Hold - Removes Color
+            - Rigth Click + Shift Hold - Applies Lighting
 
-createGrid(16);
+*/
 
-// Creating the Grid
+/********************************* GRID CREATION *************************************/
+
+createGrid(42);
+
 function createGrid(gridSideSize) {
-    let gridContainer = document.getElementById("grid-container");
+    const gridContainer = document.getElementById("grid-container");
     gridContainer.innerHTML = '';
 
     const cellSize = gridContainer.clientWidth / gridSideSize;
@@ -35,75 +40,222 @@ function createGrid(gridSideSize) {
             gridColumn.classList.add("cell");
             gridColumn.style.width = `${cellSize}px`;
             gridColumn.style.height = `${cellSize}px`;
+            gridColumn.dataset.opacity = 1;
 
             gridContainer.appendChild(gridColumn);
         }
     }
 
-    // Mouse affects for changing the grid. 
     const cells = Array.from(document.getElementsByClassName("cell"));
+    const colorPicker = document.getElementById("grid-color");
+    const randomColorCheckbox = document.getElementById("random-color-checkbox");
+
     cells.forEach(cell => {
         cell.addEventListener("mousedown", (event) => {
             event.preventDefault();
 
-            const colorPicker = document.getElementById("grid-color")
-            const color = colorPicker.value;
+            let color = randomColorCheckbox.checked ? getRandomColor() : colorPicker.value;
 
             switch (event.button) {
 
                 // Left click to add background color
                 case 0: 
-                    event.target.style.backgroundColor = color;
-                    event.target.classList.add("changeColor");
 
-                    const onMouseOverAdd = (overEvent) => {
-                        overEvent.target.style.backgroundColor = color;
-                        overEvent.target.classList.add("changeColor");
-                    };
+                    // Shift + left click to Darken the cell
+                    if (event.shiftKey) {
 
-                    cells.forEach(c => c.addEventListener("mouseover", onMouseOverAdd));
+                        applyShading(event);
 
-                    document.addEventListener("mouseup", () => {
-                        cells.forEach(c => c.removeEventListener("mouseover", onMouseOverAdd));
-                    }, { once: true });
+                        const onMouseOverAddShade = (shadeEvent) => {
+                            applyShading(shadeEvent)
+                        };
 
-                    break;
+                        cells.forEach(cell => cell.addEventListener("mouseover", onMouseOverAddShade));
+
+                        document.addEventListener("mouseup", () => {
+                            cells.forEach(cell => cell.removeEventListener("mouseover", onMouseOverAddShade));
+                        }, { once: true });
+
+                        break;
+
+                    } else {
+                        applyColor(event, color);
+
+                        const onMouseOverAdd = (overEvent) => {
+                            color = randomColorCheckbox.checked ? getRandomColor() : color;
+                            applyColor(overEvent, color);
+                        };
+
+                        cells.forEach(cell => cell.addEventListener("mouseover", onMouseOverAdd));
+
+                        document.addEventListener("mouseup", () => {
+                            cells.forEach(cell => cell.removeEventListener("mouseover", onMouseOverAdd));
+                        }, { once: true });
+
+                        break;
+                     }
 
                 // Right click to remove background color
                 case 2: 
-                    event.target.style.backgroundColor = "";
-                    event.target.classList.remove("changeColor");
+                    // Shift + Right Click to Lighten the cell
+                    if (event.shiftKey) {
+
+                        applyLighting(event);
+
+                        const onMouseOverAddLight = (lightEvent) => {
+                            applyLighting(lightEvent)
+                        };
+
+                        cells.forEach(cell => cell.addEventListener("mouseover", onMouseOverAddLight));
+
+                        document.addEventListener("mouseup", () => {
+                            cells.forEach(cell => cell.removeEventListener("mouseover", onMouseOverAddLight));
+                        }, { once: true });
+
+                        break;
+
+
+                    } else {
+                        applyColor(event, '');
 
                     const onMouseOverRemove = (overEvent) => {
-                        overEvent.target.style.backgroundColor = "";
-                        overEvent.target.classList.remove("changeColor");
+                        applyColor(overEvent, '');
                     };
 
-                    cells.forEach(c => c.addEventListener("mouseover", onMouseOverRemove));
+                    cells.forEach(cell => cell.addEventListener("mouseover", onMouseOverRemove));
 
                     document.addEventListener("mouseup", () => {
-                        cells.forEach(c => c.removeEventListener("mouseover", onMouseOverRemove));
+                        cells.forEach(cell => cell.removeEventListener("mouseover", onMouseOverRemove));
                     }, { once: true });
 
                     break;
+                    }
+                    
             }
         });
     });
 
-    // Prevent the context menu from appearing on right-click
     gridContainer.addEventListener("contextmenu", (event) => {
         event.preventDefault();
     });
 }
 
+
+
+/********************************* BUTTON CONTROLS *************************************/
+
 // Slider Controls
 const slider = document.getElementById("slider");
-const output = document.getElementById("myRange");
-output.textContent = `${slider.value} x ${slider.value}`
+const sliderOutput = document.getElementById("myRange");
+sliderOutput.textContent = `${slider.value} x ${slider.value}`;
 
-slider.oninput = function() {
+slider.oninput = function () {
     const sliderValue = slider.value;
-    output.textContent = `${sliderValue} x ${sliderValue}`
-
+    sliderOutput.textContent = `${sliderValue} x ${sliderValue}`;
     createGrid(sliderValue);
-}
+};
+
+// Grid Lines Toggle
+const gridLinesToggle = document.getElementById("grid-lines-checkbox");
+gridLinesToggle.addEventListener("change", function () {
+    const cells = Array.from(document.getElementsByClassName("cell"));
+    if (this.checked) {
+        cells.forEach(cell => {
+            cell.style.border = 'none';
+        });
+    } else {
+        cells.forEach(cell => {
+            cell.style.border = '1px solid red';
+        });
+    }
+});
+
+// Reset Button
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", () => {
+    const defaultSize = 42;
+    slider.value = defaultSize
+    sliderOutput.textContent = `${defaultSize} x ${defaultSize}`;
+    createGrid(defaultSize);
+
+    const randomColorCheckBox = document.getElementById("random-color-checkbox");
+    const gridLinesCheckbox = document.getElementById("grid-lines-checkbox");
+    randomColorCheckBox.checked = false;
+    gridLinesCheckbox.checked = false;
+    
+});
+
+
+
+/********************************* MOUSE / KEY CONTROLS *************************************/
+
+// Apply Color to grid
+const applyColor = (event, color) => {
+    const cell = event.target;
+    cell.style.backgroundColor = color;
+    cell.style.opacity = 1;
+    cell.dataset.opacity = 1;
+    cell.dataset.originalColor = color; 
+};
+
+// Apply Shading
+const applyShading = (event) => {
+    const cell = event.target;
+    let color = cell.dataset.originalColor || '#FFFFFF'; 
+    let [r, g, b] = hexToRgb(color);
+
+    const shadeAmount = 15; 
+    r = Math.max(r - shadeAmount, 0);
+    g = Math.max(g - shadeAmount, 0);
+    b = Math.max(b - shadeAmount, 0);
+
+    cell.style.backgroundColor = rgbToHex(r, g, b);
+    cell.dataset.originalColor = rgbToHex(r, g, b); 
+};
+
+const applyLighting = (event) => {
+    const cell = event.target;
+    let color = cell.dataset.originalColor || '#FFFFFF'; 
+    let [r, g, b] = hexToRgb(color);
+
+    const lightingAmount = 15;; 
+    r = Math.min(r + lightingAmount, 255);
+    g = Math.min(g + lightingAmount, 255);
+    b = Math.min(b + lightingAmount, 255);
+
+    cell.style.backgroundColor = rgbToHex(r, g, b);
+    cell.dataset.originalColor = rgbToHex(r, g, b); 
+};
+
+
+/********************************* HELPER FUNCTIONS *************************************/
+
+// Random Color Generator
+const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};
+
+// HEX TO RGB CONVERSION
+const hexToRgb = (hex) => {
+    let r = 0, g = 0, b = 0;
+    if (hex.length === 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+    } else if (hex.length === 7) {
+        r = parseInt(hex[1] + hex[2], 16);
+        g = parseInt(hex[3] + hex[4], 16);
+        b = parseInt(hex[5] + hex[6], 16);
+    }
+    return [r, g, b];
+};
+
+// RGB TO HEX CONVERSION
+const rgbToHex = (r, g, b) => {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+};

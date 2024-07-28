@@ -31,11 +31,35 @@
             <p id="myRange"></p>
         </div>
 
-        <div id="Grid Controls">
-            <input type="color" id="grid-color" value="#000000">
+        <div id="grid-controls">
+
+            <div id="color-block">
+                <input type="color" id="grid-color" value="#000000">
+            </div>
+
+            <div id="toggle-grid-lines">
+                <label class="switch">
+                    <input type="checkbox" id="grid-lines-checkbox">
+                    <span class="bottom-slider"></span>
+                </label>
+            </div>
+
+            <div id="toggle-grid-random">
+                <label class="switch">
+                    <input type="checkbox" id="random-color-checkbox">
+                    <span class="bottom-slider"></span>
+                </label>
+            </div>
+
+            <div id="reset-button">
+                <button id="reset">Reset</button>
+            </div>
+
         </div>
 
-        <footer id="footer"></footer>
+        <footer id="footer">
+            Louis DeRienzo - Odin Project - Copyright 2024
+        </footer>
     </div>
 </body>
 </html>
