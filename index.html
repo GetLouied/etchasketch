@@ -10,52 +10,79 @@
 <body>
     <div id="entire-container">
         <div id="header">
-            <div id="header-content">
-                <h1>Grid Genius</h1>
-                <img src="./images/einstein.png" alt="einstein" width="100px" height="100px">
-            </div>
+            <img src="./images/einstein.png" alt="einstein" width="100px" height="100px">
+            <h1>Grid Genius</h1>
         </div>
 
         <div id="main-container">
 
-            <div id="usage-key">
+            <div id="usage-keys">
+                <h3>Usage Keys:</h3>
+                <div class="key">
+                    <h5>Left Click</h5>
+                    <p>Clicking or holding the left mouse button 
+                        changes the pixels to the selected color.
+                    </p>
+                </div>
+                <div class="key">
+                    <h5>Left Click + Shift</h5>
+                    <p>Clicking or holding the left mouse button + shift 
+                        darkens the pixels.
+                    </p>
+                </div>
+                <div class="key">
+                    <h5>Right Click</h5>
+                    <p>Clicking or holding the right mouse button 
+                        resets the pixels to white.
+                    </p>
+                </div>
+                <div class="key">
+                    <h5>Right Click + Shift</h5>
+                    <p>Clicking or holding the right mouse button + shift 
+                        lightens the pixels.
+                    </p>
+                </div>
             </div>
 
             <div id="grid-container">
             </div>
+    
+            <div id="grid-controls">
+
+                <h3>Button Controls</h3>
+
+                <div id="slider-container">
+                    <input type="range" min="16" max="100" value="42" id="slider">
+                    <p id="myRange"></p>
+                </div>
+    
+                <div id="color-block">
+                    <input type="color" id="grid-color" value="#000000">
+                </div>
+    
+                <div id="toggle-grid-lines">
+                    <label class="switch">
+                        <input type="checkbox" id="grid-lines-checkbox">
+                        <span class="bottom-slider"></span>
+                    </label>
+                </div>
+    
+                <div id="toggle-grid-random">
+                    <label class="switch">
+                        <input type="checkbox" id="random-color-checkbox">
+                        <span class="bottom-slider"></span>
+                    </label>
+                </div>
+    
+                <div id="reset-button">
+                    <button id="reset">Reset</button>
+                </div>
+    
+            </div>
 
         </div>
 
-        <div id="slider-container">
-            <input type="range" min="16" max="100" value="42" id="slider">
-            <p id="myRange"></p>
-        </div>
 
-        <div id="grid-controls">
-
-            <div id="color-block">
-                <input type="color" id="grid-color" value="#000000">
-            </div>
-
-            <div id="toggle-grid-lines">
-                <label class="switch">
-                    <input type="checkbox" id="grid-lines-checkbox">
-                    <span class="bottom-slider"></span>
-                </label>
-            </div>
-
-            <div id="toggle-grid-random">
-                <label class="switch">
-                    <input type="checkbox" id="random-color-checkbox">
-                    <span class="bottom-slider"></span>
-                </label>
-            </div>
-
-            <div id="reset-button">
-                <button id="reset">Reset</button>
-            </div>
-
-        </div>
 
         <footer id="footer">
             Louis DeRienzo - Odin Project - Copyright 2024

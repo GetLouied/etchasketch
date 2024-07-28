@@ -6,8 +6,9 @@ TO DO LIST:
         - certain cells will be set to black, 42 by 42 pixels
         - Add laughing sound upon being clicked
 
-    Bottom Controls Design:
-        - Clipart above each button
+    Layout Design:
+        - Fix layout design to have 3 sections
+        - Usage Keys, Container, Buttons:
 
     Add Footer
 
