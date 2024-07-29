@@ -1,10 +1,6 @@
 /* 
 
 TO DO LIST:
-    Special Button:
-        - Set everything to a black picture of the troll face
-        - certain cells will be set to black, 42 by 42 pixels
-        - Add laughing sound upon being clicked
 
     Layout Design:
         - Fix layout design to have 3 sections
@@ -251,3 +247,25 @@ const hexToRgb = (hex) => {
 const rgbToHex = (r, g, b) => {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 };
+
+
+
+/********************************* SECRET SPECIAL FUNCTION *************************************/
+
+
+const grid = document.getElementById("grid-container");
+const special = document.getElementById("special");
+let trollLaugh = new Audio('./audio/trollLaugh.wav')
+special.addEventListener("click", (event) => {
+    
+    grid.innerHTML = '';
+
+    trollLaugh.play();
+
+    const trollImage = document.createElement("img");
+    trollImage.src = "./images/troll.jpg";
+    trollImage.style.width = "100%";
+    trollImage.style.height = "100%";
+    trollImage.style.objectFit = "cover"; // Ensure the image covers the entire container
+    grid.appendChild(trollImage);
+});

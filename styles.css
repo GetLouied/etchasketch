@@ -107,6 +107,9 @@ html, body {
     margin-bottom: 20px;
 }
 
+#special {
+    background-color: red;
+}
 
 /* 
 Random Color Generator & Grid Off Switch Styles
