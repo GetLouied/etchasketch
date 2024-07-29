@@ -252,6 +252,6 @@ special.addEventListener("click", (event) => {
     trollImage.src = "./images/troll.jpg";
     trollImage.style.width = "100%";
     trollImage.style.height = "100%";
-    trollImage.style.objectFit = "cover"; // Ensure the image covers the entire container
+    trollImage.style.objectFit = "cover";
     grid.appendChild(trollImage);
 });
