@@ -1,17 +1,3 @@
-/* 
-
-TO DO LIST:
-
-    Layout Design:
-        - Fix layout design to have 3 sections
-        - Usage Keys, Container, Buttons:
-
-    Tooltips upon hover of each control button
-        - Make sure there is a time delay before the tooltip shows
-    
-
-*/
-
 /********************************* GRID CREATION *************************************/
 
 createGrid(42);
