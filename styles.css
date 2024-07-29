@@ -56,6 +56,31 @@ html, body {
 
 #slider-container {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items:  center;
+    gap: 8px;
+}
+
+#color-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#toggle-grid-lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#toggle-grid-random {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
 #myRange {

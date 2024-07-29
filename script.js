@@ -10,18 +10,9 @@ TO DO LIST:
         - Fix layout design to have 3 sections
         - Usage Keys, Container, Buttons:
 
-    Add Footer
-
     Tooltips upon hover of each control button
         - Make sure there is a time delay before the tooltip shows
     
-    Key Template
-        - Description
-        - Available Keys
-            - Left Click Hold - Applies Color
-            - Left Click + Shift Hold - Applies Shading
-            - Right Click Hold - Removes Color
-            - Rigth Click + Shift Hold - Applies Lighting
 
 */
 
